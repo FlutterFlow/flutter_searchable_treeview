@@ -7,3 +7,4 @@
 export 'src/primitives/tree_controller.dart';
 export 'src/primitives/tree_node.dart';
 export 'src/tree_view.dart';
+export 'src/search_tree_nodes.dart';
