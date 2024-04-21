@@ -8,12 +8,12 @@ import 'primitives/tree_node.dart';
 
 /// Copies nodes to unmodifiable list, assigning missing keys and checking for duplicates.
 List<TreeNode> searchTreeNodes(
-    List<TreeNode>? nodes, bool Function(Map<String, dynamic>) searchFunction) {
+    List<TreeNode>? nodes, bool Function(dynamic) searchFunction) {
   return _searchNodesRecursively(nodes, searchFunction)!;
 }
 
 List<TreeNode>? _searchNodesRecursively(
-    List<TreeNode>? nodes, bool Function(Map<String, dynamic>) searchFunction) {
+    List<TreeNode>? nodes, bool Function(dynamic) searchFunction) {
   if (nodes == null) {
     return null;
   }

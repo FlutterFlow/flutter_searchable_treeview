@@ -11,7 +11,7 @@ class TreeNode {
   final List<TreeNode>? children;
   final Widget content;
   final Key? key;
-  final Map<String, dynamic>? metaData;
+  final dynamic metaData;
 
   TreeNode({this.key, this.children, Widget? content, this.metaData})
       : content = content ?? Container(width: 0, height: 0);
