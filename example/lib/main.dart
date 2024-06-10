@@ -5,9 +5,7 @@
 // https://developers.google.com/open-source/licenses/bsd
 
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import 'trees/controller_usage.dart';
 import 'trees/tree_from_json.dart';
 
 void main() {
@@ -22,31 +20,9 @@ class Demo extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('flutter_simple_treeview Demo'),
-            actions: [
-              TextButton(
-                  child: Text(
-                    "Source Code",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () async => await launchUrl(
-                        Uri.https('github.com',
-                            'google/flutter.widgets/tree/master/packages/flutter_simple_treeview/example'),
-                      )),
-            ],
-            bottom: TabBar(
-              tabs: [
-                Tab(text: "Tree Controller Usage"),
-                Tab(text: "Tree From JSON"),
-              ],
-            ),
+            title: Text('flutter_searchable_treeview Demo'),
           ),
-          body: TabBarView(
-            children: [
-              buildBodyFrame(ControllerUsage()),
-              buildBodyFrame(TreeFromJson()),
-            ],
-          ),
+          body: buildBodyFrame(TreeFromJson()),
         ),
       ),
     );

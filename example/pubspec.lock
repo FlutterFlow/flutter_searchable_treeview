@@ -28,7 +28,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.0.0"
+    version: "2.0.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -63,6 +63,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  text_search:
+    dependency: "direct main"
+    description:
+      name: text_search
+      sha256: e2e826848ba452df6702dc8f1315de90e812eb2303ecec9cc1155f7715bec934
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
+  tuple:
+    dependency: transitive
+    description:
+      name: tuple
+      sha256: a97ce2013f240b2f3807bcbaf218765b6f301c3eff91092bcfa23a039e7dd151
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   url_launcher:
     dependency: "direct main"
     description:

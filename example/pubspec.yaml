@@ -9,6 +9,7 @@ dependencies:
   url_launcher: ^6.1.3
   flutter_searchable_treeview:
     path: ..
+  text_search: 1.0.1
 
 flutter:
   uses-material-design: true

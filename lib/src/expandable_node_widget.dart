@@ -68,6 +68,7 @@ class _ExpandableNodeWidgetState extends State<ExpandableNodeWidget> {
           Padding(
             padding: EdgeInsets.only(left: widget.indent!),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: widget.treeNode.children!
                   .map((e) => e.nodeBuilder(e))
                   .toList(),
