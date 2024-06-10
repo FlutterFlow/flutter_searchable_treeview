@@ -16,7 +16,8 @@ class ControllerUsage extends StatefulWidget {
 
 class _ControllerUsageState extends State<ControllerUsage> {
   final Key _key = ValueKey(22);
-  final TreeController _controller = TreeController(allNodesExpanded: true);
+  final ExpandableTreeController _controller =
+      ExpandableTreeController(allNodesExpanded: true);
 
   @override
   Widget build(BuildContext context) {
@@ -57,27 +58,61 @@ class _ControllerUsageState extends State<ControllerUsage> {
   }
 
   Widget buildTree() {
+    final nodeBuilder = (node) {
+      return ExpandableNodeWidget(
+        treeNode: node,
+        state: _controller,
+        indent: 10,
+        iconSize: 24,
+      );
+    };
     return TreeView(
-      treeController: _controller,
       nodes: [
-        TreeNode(content: Text("node 1")),
+        TreeNode(
+          content: Text("node 1"),
+          nodeBuilder: nodeBuilder,
+        ),
         TreeNode(
           content: Icon(Icons.audiotrack),
           children: [
-            TreeNode(content: Text("node 21")),
+            TreeNode(
+              content: Text("node 21"),
+              nodeBuilder: nodeBuilder,
+            ),
             TreeNode(
               content: Text("node 22"),
               key: _key,
               children: [
                 TreeNode(
                   content: Icon(Icons.sentiment_very_satisfied),
+                  nodeBuilder: nodeBuilder,
+                ),
+                TreeNode(
+                  content: Icon(Icons.sentiment_dissatisfied),
+                  nodeBuilder: nodeBuilder,
+                ),
+                TreeNode(
+                  content: Icon(Icons.sentiment_neutral),
+                  nodeBuilder: nodeBuilder,
                 ),
               ],
+              nodeBuilder: (node) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    node.content,
+                    if (node.children != null)
+                      ...node.children!.map((e) => e.nodeBuilder(e)).toList()
+                  ],
+                );
+              },
             ),
             TreeNode(
               content: Text("node 23"),
+              nodeBuilder: nodeBuilder,
             ),
           ],
+          nodeBuilder: nodeBuilder,
         ),
       ],
     );

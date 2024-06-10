@@ -23,7 +23,7 @@
       "name": "flutter_searchable_treeview",
       "rootUri": "../../",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "flutter_web_plugins",
@@ -122,7 +122,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2024-04-20T14:16:47.578013Z",
+  "generated": "2024-06-10T01:04:06.324666Z",
   "generator": "pub",
-  "generatorVersion": "3.3.1"
+  "generatorVersion": "3.3.0"
 }

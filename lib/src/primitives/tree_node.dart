@@ -6,13 +6,21 @@
 
 import 'package:flutter/material.dart';
 
+typedef NodeBuilder = Widget Function(TreeNode);
+
 /// One node of a tree.
 class TreeNode {
   final List<TreeNode>? children;
   final Widget content;
   final Key? key;
   final dynamic metaData;
+  final NodeBuilder nodeBuilder;
 
-  TreeNode({this.key, this.children, Widget? content, this.metaData})
-      : content = content ?? Container(width: 0, height: 0);
+  TreeNode({
+    this.key,
+    this.children,
+    Widget? content,
+    this.metaData,
+    required this.nodeBuilder,
+  }) : content = content ?? Container(width: 0, height: 0);
 }

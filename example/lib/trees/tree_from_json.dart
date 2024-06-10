@@ -17,8 +17,8 @@ class TreeFromJson extends StatefulWidget {
 }
 
 class _TreeFromJsonState extends State<TreeFromJson> {
-  final TreeController _treeController =
-      TreeController(allNodesExpanded: false);
+  final ExpandableTreeController _treeController =
+      ExpandableTreeController(allNodesExpanded: false);
   final TextEditingController _textController = TextEditingController(text: '''
 {
   "employee": {
@@ -69,7 +69,6 @@ class _TreeFromJsonState extends State<TreeFromJson> {
       var parsedJson = json.decode(_textController.text);
       return TreeView(
         nodes: toTreeNodes(parsedJson),
-        treeController: _treeController,
       );
     } on FormatException catch (e) {
       return Text(e.message);
@@ -77,20 +76,41 @@ class _TreeFromJsonState extends State<TreeFromJson> {
   }
 
   List<TreeNode> toTreeNodes(dynamic parsedJson) {
+    final nodeBuilder = (node) {
+      return ExpandableNodeWidget(
+        treeNode: node,
+        state: _treeController,
+        indent: 10,
+        iconSize: 24,
+      );
+    };
     if (parsedJson is Map<String, dynamic>) {
       return parsedJson.keys
           .map((k) => TreeNode(
-              content: Text('$k:'), children: toTreeNodes(parsedJson[k])))
+                content: Text('$k:'),
+                children: toTreeNodes(parsedJson[k]),
+                nodeBuilder: nodeBuilder,
+              ))
           .toList();
     }
     if (parsedJson is List<dynamic>) {
       return parsedJson
           .asMap()
-          .map((i, element) => MapEntry(i,
-              TreeNode(content: Text('[$i]:'), children: toTreeNodes(element))))
+          .map((i, element) => MapEntry(
+              i,
+              TreeNode(
+                content: Text('[$i]:'),
+                children: toTreeNodes(element),
+                nodeBuilder: nodeBuilder,
+              )))
           .values
           .toList();
     }
-    return [TreeNode(content: Text(parsedJson.toString()))];
+    return [
+      TreeNode(
+        content: Text(parsedJson.toString()),
+        nodeBuilder: nodeBuilder,
+      )
+    ];
   }
 }

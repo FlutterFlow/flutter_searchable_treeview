@@ -27,6 +27,7 @@ List<TreeNode>? _searchNodesRecursively(
             key: node.key,
             content: node.content,
             children: children,
+            nodeBuilder: node.nodeBuilder,
           );
         }
         return null;

@@ -1,12 +1,11 @@
 name: flutter_searchable_treeview
-version: 1.0.0
+version: 2.0.0
 description: >
   A widget, that visualises a tree structure, where a node can be any widget.
 repository: https://github.com/FlutterFlow/flutter_searchable_treeview
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
-  flutter: '>=1.20.0'
+  sdk: '>=2.17.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -16,9 +15,3 @@ dev_dependencies:
   test:
   flutter_test:
     sdk: flutter
-
-screenshots:
-  - description: 'Example of tree controller usage.'
-    path: example/screenshots/treeview_demo.png
-  - description: 'Example of tree from JSON.'
-    path: example/screenshots/treeview_demo_JSON.png
