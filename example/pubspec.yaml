@@ -7,7 +7,7 @@ dependencies:
   flutter:
     sdk: flutter
   url_launcher: ^6.1.3
-  flutter_searchable_treeview:
+  flutterflow_tree_view:
     path: ..
   text_search: 1.0.1
 
