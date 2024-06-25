@@ -35,25 +35,24 @@ class TreeView extends StatefulWidget {
 
 class _TreeViewState extends State<TreeView> {
   late final TreeController _controller;
-  late final NodeStyle _style;
 
   @override
   void initState() {
     _controller = widget.treeController ?? TreeController();
-    _style = widget.style ??
-        NodeStyle(
-          arrowIconSize: 16,
-          levelIndent: 16,
-        );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final style = widget.style ??
+        NodeStyle(
+          arrowIconSize: 16,
+          levelIndent: 16,
+        );
     return buildNodes(
       widget.nodes,
       _controller,
-      _style,
+      style,
     );
   }
 }
