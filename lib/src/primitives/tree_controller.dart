@@ -13,9 +13,9 @@ class TreeController {
   bool _allNodesExpanded;
   final Map<Key, bool> _expanded = <Key, bool>{};
   final Function(String name)? onNodeToggled;
-  final Function(({String name, Map<String, dynamic> params}))? onTreeEvent;
+  final Function(({String name, Map<String, dynamic>? params}))? onTreeEvent;
 
-  void onEvent(({String name, Map<String, dynamic> params}) event) =>
+  void onEvent(({String name, Map<String, dynamic>? params}) event) =>
       onTreeEvent?.call(event);
 
   /// Returns whether all nodes in the tree are expanded or not.
