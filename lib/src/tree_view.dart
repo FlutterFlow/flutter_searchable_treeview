@@ -18,6 +18,7 @@ class TreeView extends StatelessWidget {
     required List<TreeNode> nodes,
     required this.treeController,
     this.style,
+    this.listPadding,
   }) : nodes = copyTreeNodes(nodes);
 
   /// List of root level tree nodes.
@@ -29,6 +30,9 @@ class TreeView extends StatelessWidget {
   /// Tree controller to manage the tree state.
   final TreeController treeController;
 
+  /// Padding for the list view.
+  final EdgeInsets? listPadding;
+
   @override
   Widget build(BuildContext context) {
     final nodeStyle = style ?? NodeStyle(arrowIconSize: 16, levelIndent: 16);
@@ -37,6 +41,7 @@ class TreeView extends StatelessWidget {
       treeController,
     );
     return ListView.builder(
+      padding: listPadding ?? EdgeInsets.zero,
       itemCount: flattenedTree.length,
       itemBuilder: (context, index) => NodeWidget(
         key: flattenedTree[index].key,
