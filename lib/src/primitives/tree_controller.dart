@@ -7,11 +7,16 @@ class TreeController {
   TreeController({
     allNodesExpanded = true,
     this.onNodeToggled,
+    this.onTreeEvent,
   }) : _allNodesExpanded = allNodesExpanded;
 
   bool _allNodesExpanded;
   final Map<Key, bool> _expanded = <Key, bool>{};
   final Function(String name)? onNodeToggled;
+  final Function((String name, Map<String, dynamic> params))? onTreeEvent;
+
+  void onEvent(String name, Map<String, dynamic> params) =>
+      onTreeEvent?.call((name, params));
 
   /// Returns whether all nodes in the tree are expanded or not.
   bool get allNodesExpanded => _allNodesExpanded;
@@ -28,9 +33,7 @@ class TreeController {
   /// If [onNodeToggled] is not null, it calls the function with the [name] of the toggled node.
   void toggleNodeExpanded(Key key, String name) {
     _expanded[key] = !isNodeExpanded(key);
-    if (onNodeToggled != null) {
-      onNodeToggled!(name);
-    }
+    onNodeToggled?.call(name);
   }
 
   /// Expands all nodes in the tree.
