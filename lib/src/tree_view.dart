@@ -1,35 +1,55 @@
-// Copyright 2020 the Dart project authors.
-//
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file or at
-// https://developers.google.com/open-source/licenses/bsd
-
 import 'package:flutter/material.dart';
 
 import 'copy_tree_nodes.dart';
+import 'node_style.dart';
+import 'node_widget.dart';
+import 'primitives/tree_controller.dart';
 import 'primitives/tree_node.dart';
 
-class TreeView extends StatefulWidget {
+/// Tree view with collapsible and expandable nodes.
+class TreeView extends StatelessWidget {
+  /// Constructs a tree view widget.
+  ///
+  /// - [nodes] parameter is a required list of [TreeNode] objects that represent the nodes in the tree.
+  /// - [treeController] parameter is an optional [TreeController] object that controls the behavior of the tree view.
+  /// - [style] parameter is an optional [TreeViewStyle] object that defines the style of the tree view.
+  TreeView({
+    super.key,
+    required List<TreeNode> nodes,
+    required this.treeController,
+    this.style,
+    this.listPadding,
+  }) : nodes = copyTreeNodes(nodes);
+
   /// List of root level tree nodes.
   final List<TreeNode> nodes;
 
-  TreeView({
-    Key? key,
-    required List<TreeNode> nodes,
-  })  : nodes = copyTreeNodes(nodes),
-        super(key: key);
+  /// The style to be applied to the tree view.
+  final NodeStyle? style;
 
-  @override
-  _TreeViewState createState() => _TreeViewState();
-}
+  /// Tree controller to manage the tree state.
+  final TreeController treeController;
 
-class _TreeViewState extends State<TreeView> {
+  /// Padding for the list view.
+  final EdgeInsets? listPadding;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: widget.nodes.map((node) => node.nodeBuilder(node)).toList(),
+    final nodeStyle = style ?? NodeStyle(arrowIconSize: 16, levelIndent: 16);
+    final flattenedTree = FlattenTreeNode.getFlattenedTree(
+      nodes,
+      treeController,
+    );
+    return ListView.builder(
+      padding: listPadding ?? EdgeInsets.zero,
+      itemCount: flattenedTree.length,
+      itemBuilder: (context, index) => NodeWidget(
+        key: flattenedTree[index].key,
+        treeNode: flattenedTree[index].node,
+        state: treeController,
+        level: flattenedTree[index].level,
+        style: nodeStyle,
+      ),
     );
   }
 }
