@@ -1,5 +1,5 @@
 name: flutterflow_tree_view
-version: 2.0.0
+version: 2.1.0
 description: A widget that visualizes a tree structure.
 repository: https://github.com/FlutterFlow/flutter_searchable_treeview
 environment:
