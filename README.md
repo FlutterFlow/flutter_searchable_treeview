@@ -1,5 +1,6 @@
-# flutter_simple_treeview
-This widget visualises a tree structure, where a node can be any widget.
+# FlutterFlow Tree View
+
+This widget visualizes a tree structure.
 
 ## Usage
 
