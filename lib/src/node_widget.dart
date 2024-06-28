@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
 
-import 'builder.dart';
 import 'node_style.dart';
 import 'primitives/tree_controller.dart';
 import 'primitives/tree_node.dart';
 
-/// Widget that displays one [TreeNode] and its children.
+/// Widget that displays a tree node.
 class NodeWidget extends StatefulWidget {
+  /// Constructs a widget that displays a tree node.
   const NodeWidget({
     super.key,
     required this.treeNode,
     required this.state,
     required this.style,
+    this.level = 0,
   });
 
+  /// The node to display.
   final TreeNode treeNode;
+
+  /// Manages the state of the tree.
   final TreeController state;
+
+  /// Style configuration for the node.
   final NodeStyle style;
 
+  /// Level of the node in the tree hierarchy.
+  final int level;
+
   @override
-  _NodeWidgetState createState() => _NodeWidgetState();
+  State<NodeWidget> createState() => _NodeWidgetState();
 }
 
 class _NodeWidgetState extends State<NodeWidget>
@@ -44,10 +53,11 @@ class _NodeWidgetState extends State<NodeWidget>
   @override
   Widget build(BuildContext context) {
     final style = widget.style;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
+    return Padding(
+      padding: EdgeInsets.only(left: style.levelIndent * widget.level),
+      child: SizedBox(
+        height: 38,
+        child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 1.0),
           child: Material(
             color: widget.treeNode.isError
@@ -97,16 +107,7 @@ class _NodeWidgetState extends State<NodeWidget>
             ),
           ),
         ),
-        if (_isExpanded && !_isLeaf)
-          Padding(
-            padding: EdgeInsets.only(left: style.levelIndent),
-            child: buildNodes(
-              widget.treeNode.children!,
-              widget.state,
-              widget.style,
-            ),
-          )
-      ],
+      ),
     );
   }
 }

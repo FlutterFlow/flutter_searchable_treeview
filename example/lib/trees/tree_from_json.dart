@@ -58,7 +58,7 @@ class _TreeFromJsonState extends State<TreeFromJson> {
           iconSize: 40,
           onPressed: () => setState(() {}),
         ),
-        buildTree(),
+        Expanded(child: buildTree()),
       ],
     );
   }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'builder.dart';
 import 'copy_tree_nodes.dart';
 import 'node_style.dart';
+import 'node_widget.dart';
 import 'primitives/tree_controller.dart';
 import 'primitives/tree_node.dart';
 
 /// Tree view with collapsible and expandable nodes.
-class TreeView extends StatefulWidget {
+class TreeView extends StatelessWidget {
   /// Constructs a tree view widget.
   ///
   /// - [nodes] parameter is a required list of [TreeNode] objects that represent the nodes in the tree.
@@ -16,7 +16,7 @@ class TreeView extends StatefulWidget {
   TreeView({
     super.key,
     required List<TreeNode> nodes,
-    this.treeController,
+    required this.treeController,
     this.style,
   }) : nodes = copyTreeNodes(nodes);
 
@@ -27,32 +27,24 @@ class TreeView extends StatefulWidget {
   final NodeStyle? style;
 
   /// Tree controller to manage the tree state.
-  final TreeController? treeController;
-
-  @override
-  _TreeViewState createState() => _TreeViewState();
-}
-
-class _TreeViewState extends State<TreeView> {
-  late final TreeController _controller;
-
-  @override
-  void initState() {
-    _controller = widget.treeController ?? TreeController();
-    super.initState();
-  }
+  final TreeController treeController;
 
   @override
   Widget build(BuildContext context) {
-    final style = widget.style ??
-        NodeStyle(
-          arrowIconSize: 16,
-          levelIndent: 16,
-        );
-    return buildNodes(
-      widget.nodes,
-      _controller,
-      style,
+    final nodeStyle = style ?? NodeStyle(arrowIconSize: 16, levelIndent: 16);
+    final flattenedTree = FlattenTreeNode.getFlattenedTree(
+      nodes,
+      treeController,
+    );
+    return ListView.builder(
+      itemCount: flattenedTree.length,
+      itemBuilder: (context, index) => NodeWidget(
+        key: flattenedTree[index].key,
+        treeNode: flattenedTree[index].node,
+        state: treeController,
+        level: flattenedTree[index].level,
+        style: nodeStyle,
+      ),
     );
   }
 }

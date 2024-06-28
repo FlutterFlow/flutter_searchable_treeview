@@ -13,12 +13,19 @@ class TreeController {
   final Map<Key, bool> _expanded = <Key, bool>{};
   final Function(String name)? onNodeToggled;
 
+  /// Returns whether all nodes in the tree are expanded or not.
   bool get allNodesExpanded => _allNodesExpanded;
 
+  /// Returns whether a specific node with the given [key] is expanded or not.
+  ///
+  /// If the node is not found in the [_expanded] map, it returns the value of [_allNodesExpanded].
   bool isNodeExpanded(Key key) {
     return _expanded[key] ?? _allNodesExpanded;
   }
 
+  /// Toggles the expansion state of a specific node with the given [key].
+  ///
+  /// If [onNodeToggled] is not null, it calls the function with the [name] of the toggled node.
   void toggleNodeExpanded(Key key, String name) {
     _expanded[key] = !isNodeExpanded(key);
     if (onNodeToggled != null) {
@@ -26,20 +33,24 @@ class TreeController {
     }
   }
 
+  /// Expands all nodes in the tree.
   void expandAll() {
     _allNodesExpanded = true;
     _expanded.clear();
   }
 
+  /// Collapses all nodes in the tree.
   void collapseAll() {
     _allNodesExpanded = false;
     _expanded.clear();
   }
 
+  /// Expands a specific node with the given [key].
   void expandNode(Key key) {
     _expanded[key] = true;
   }
 
+  /// Collapses a specific node with the given [key].
   void collapseNode(Key key) {
     _expanded[key] = false;
   }

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-class _TreeNodeKey extends ValueKey {
-  const _TreeNodeKey(super.value);
-}
-
 /// Provides unique keys and verifies duplicates.
 class KeyProvider {
   int _nextIndex = 0;
@@ -13,7 +9,7 @@ class KeyProvider {
   /// was not met before.
   Key key(Key? originalKey) {
     if (originalKey == null) {
-      return _TreeNodeKey(_nextIndex++);
+      return ValueKey(_nextIndex++);
     }
     if (_keys.contains(originalKey)) {
       throw ArgumentError('There should not be nodes with the same kays. '
