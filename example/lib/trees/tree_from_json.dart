@@ -70,6 +70,13 @@ class _TreeFromJsonState extends State<TreeFromJson> {
       return TreeView(
         treeController: _treeController,
         nodes: toTreeNodes(parsedJson),
+        nodeBuilder: (context, flattenedNode) => ListTile(
+          title: Text(flattenedNode.node.name),
+          onTap: () {
+            _treeController.toggleNodeExpanded(
+                flattenedNode.node.key!, flattenedNode.node.name);
+          },
+        ),
       );
     } on FormatException catch (e) {
       return Text(e.message);

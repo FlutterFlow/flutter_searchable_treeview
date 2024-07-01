@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'copy_tree_nodes.dart';
-import 'node_style.dart';
-import 'node_widget.dart';
 import 'primitives/tree_controller.dart';
 import 'primitives/tree_node.dart';
 
@@ -12,20 +10,21 @@ class TreeView extends StatelessWidget {
   ///
   /// - [nodes] parameter is a required list of [TreeNode] objects that represent the nodes in the tree.
   /// - [treeController] parameter is an optional [TreeController] object that controls the behavior of the tree view.
-  /// - [style] parameter is an optional [TreeViewStyle] object that defines the style of the tree view.
+  /// - [nodeBuilder] parameter is a required function that builds a widget for each tree node.
   TreeView({
     super.key,
     required List<TreeNode> nodes,
     required this.treeController,
-    this.style,
+    required this.nodeBuilder,
     this.listPadding,
   }) : nodes = copyTreeNodes(nodes);
 
   /// List of root level tree nodes.
   final List<TreeNode> nodes;
 
-  /// The style to be applied to the tree view.
-  final NodeStyle? style;
+  /// Builder function to create a widget for each tree node.
+  final Widget Function(BuildContext context, FlattenTreeNode flattenedNode)
+      nodeBuilder;
 
   /// Tree controller to manage the tree state.
   final TreeController treeController;
@@ -35,21 +34,15 @@ class TreeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final nodeStyle = style ?? NodeStyle(arrowIconSize: 16, levelIndent: 16);
-    final flattenedTree = FlattenTreeNode.getFlattenedTree(
+    final flattenedTreeNode = FlattenTreeNode.getFlattenedTree(
       nodes,
       treeController,
     );
     return ListView.builder(
       padding: listPadding ?? EdgeInsets.zero,
-      itemCount: flattenedTree.length,
-      itemBuilder: (context, index) => NodeWidget(
-        key: flattenedTree[index].key,
-        treeNode: flattenedTree[index].node,
-        state: treeController,
-        level: flattenedTree[index].level,
-        style: nodeStyle,
-      ),
+      itemCount: flattenedTreeNode.length,
+      itemBuilder: (context, index) =>
+          nodeBuilder(context, flattenedTreeNode[index]),
     );
   }
 }
