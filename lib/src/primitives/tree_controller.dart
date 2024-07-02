@@ -12,7 +12,7 @@ class TreeController {
 
   bool _allNodesExpanded;
   final Map<Key, bool> _expanded = <Key, bool>{};
-  final Function(String name)? onNodeToggled;
+  final Function(String? name, [bool? isAllExpanded])? onNodeToggled;
   final Function(({String name, Map<String, dynamic>? params}))? onTreeEvent;
 
   void onEvent(({String name, Map<String, dynamic>? params}) event) =>
@@ -24,9 +24,7 @@ class TreeController {
   /// Returns whether a specific node with the given [key] is expanded or not.
   ///
   /// If the node is not found in the [_expanded] map, it returns the value of [_allNodesExpanded].
-  bool isNodeExpanded(Key key) {
-    return _expanded[key] ?? _allNodesExpanded;
-  }
+  bool isNodeExpanded(Key key) => _expanded[key] ?? _allNodesExpanded;
 
   /// Toggles the expansion state of a specific node with the given [key].
   ///
@@ -40,12 +38,14 @@ class TreeController {
   void expandAll() {
     _allNodesExpanded = true;
     _expanded.clear();
+    onNodeToggled?.call(null, true);
   }
 
   /// Collapses all nodes in the tree.
   void collapseAll() {
     _allNodesExpanded = false;
     _expanded.clear();
+    onNodeToggled?.call(null, false);
   }
 
   /// Expands a specific node with the given [key].
