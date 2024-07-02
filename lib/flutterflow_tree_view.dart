@@ -4,6 +4,7 @@
 // license that can be found in the LICENSE file or at
 // https://developers.google.com/open-source/licenses/bsd
 
+export 'src/copy_tree_nodes.dart';
 export 'src/primitives/tree_controller.dart';
 export 'src/primitives/tree_node.dart';
 export 'src/tree_view.dart';
