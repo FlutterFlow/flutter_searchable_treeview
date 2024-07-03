@@ -43,6 +43,7 @@ List<TreeNode>? _copyNodesRecursively(
       children: _copyNodesRecursively(n.children, keyProvider),
       isError: n.isError,
       isSubLevel: n.isSubLevel,
+      metaData: n.metaData,
     );
   }));
 }
