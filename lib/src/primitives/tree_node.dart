@@ -42,6 +42,39 @@ class TreeNode {
 
   /// Indicates whether the tree node is a sub-level node.
   final bool isSubLevel;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other.runtimeType != runtimeType) return false;
+    return other is TreeNode &&
+        other.name == name &&
+        other.isError == isError &&
+        other.isSubLevel == isSubLevel &&
+        _listEquals(other.children, children) &&
+        other.metaData == metaData;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      name,
+      isError,
+      isSubLevel,
+      children == null ? null : Object.hashAll(children!), // Hash child nodes
+      metaData,
+    );
+  }
+
+  /// Helper method to compare two lists of TreeNode objects
+  static bool _listEquals(List<TreeNode>? a, List<TreeNode>? b) {
+    if (a == null || b == null) return a == b;
+    if (a.length != b.length) return false;
+    for (int i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
+  }
 }
 
 /// Represents a flattened tree node.
